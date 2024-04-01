@@ -1,13 +1,13 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-const Country = sequelize.define(
+const COUNTRIES = sequelize.define(
   "COUNTRIES",
   {
     COUNTRY_ID: {
       type: DataTypes.CHAR(2),
       allowNull: false,
-      primaryKey: true,
+      // primaryKey: true,
     },
     COUNTRY_NAME: {
       type: DataTypes.STRING(40),
@@ -28,4 +28,4 @@ const Country = sequelize.define(
   }
 );
 
-module.exports = Country;
+module.exports = COUNTRIES;

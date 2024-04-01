@@ -1,8 +1,8 @@
-const Department = require("../models/departments");
+const DEPARTMENTS = require("../models/departments");
 
 async function getAllDepartments(req, res) {
   try {
-    const departments = await Department.findAll();
+    const departments = await DEPARTMENTS.findAll();
     res.json(departments);
   } catch (error) {
     console.error("Error fetching departments:", error);

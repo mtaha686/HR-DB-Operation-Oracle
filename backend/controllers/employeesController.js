@@ -1,8 +1,8 @@
-const Employee = require("../models/employees");
+const EMPLOYEES = require("../models/employees");
 
 async function getAllEmployees(req, res) {
   try {
-    const employees = await Employee.findAll();
+    const employees = await EMPLOYEES.findAll();
     res.json(employees);
   } catch (error) {
     console.error("Error fetching employees:", error);

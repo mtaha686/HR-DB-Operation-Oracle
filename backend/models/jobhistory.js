@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-const JobHistory = sequelize.define(
-  "JobHistory",
+const JOB_HISTORY = sequelize.define(
+  "JOB_HISTORY",
   {
     EMPLOYEE_ID: {
       type: DataTypes.INTEGER,
@@ -33,4 +33,4 @@ const JobHistory = sequelize.define(
   }
 );
 
-module.exports = JobHistory;
+module.exports = JOB_HISTORY;

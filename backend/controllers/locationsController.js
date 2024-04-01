@@ -1,8 +1,8 @@
-const Location = require("../models/locations");
+const LOCATIONS = require("../models/locations");
 
 async function getAllLocations(req, res) {
   try {
-    const locations = await Location.findAll();
+    const locations = await LOCATIONS.findAll();
     res.json(locations);
   } catch (error) {
     console.error("Error fetching locations:", error);

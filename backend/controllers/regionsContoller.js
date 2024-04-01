@@ -1,8 +1,8 @@
-const Region = require("../models/regions");
+const REGIONS = require("../models/regions");
 
 async function getAllRegions(req, res) {
   try {
-    const regions = await Region.findAll();
+    const regions = await REGIONS.findAll();
     res.json(regions);
   } catch (error) {
     console.error("Error fetching regions:", error);

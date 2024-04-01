@@ -1,8 +1,8 @@
-const Job = require("../models/jobs");
+const JOBS = require("../models/jobs");
 
 async function getAllJobs(req, res) {
   try {
-    const jobs = await Job.findAll();
+    const jobs = await JOBS.findAll();
     res.json(jobs);
   } catch (error) {
     console.error("Error fetching jobs:", error);

@@ -1,0 +1,10 @@
+ID,Job_Title,Min_Salary,Max_Salary
+AD_DIR,Administration Director,18000,35000
+HR_MGR,Human Resources Manager,8500,17000
+TECH_LEAD,Technical Lead,10000,20000
+DEV,Developer,6000,12000
+QA_ANALYST,Quality Assurance Analyst,5500,10500
+DB_ADMIN,Database Administrator,7000,14000
+CFO,Chief Financial Officer,20000,40000
+CTO,Chief Technology Officer,22000,42000
+CMO,Chief Marketing Officer,19000,38000

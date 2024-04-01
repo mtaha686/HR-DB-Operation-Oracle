@@ -1,4 +1,4 @@
-const Country = require("../models/countries");
+const COUNTRIES = require("../models/countries");
 const sequelize = require("../config/db");
 const csv = require("csv-parser");
 const fs = require("fs");
@@ -7,7 +7,7 @@ const XLSX = require("xlsx");
 
 async function getAllCountries(req, res) {
   try {
-    const countries = await Country.findAll();
+    const countries = await COUNTRIES.findAll();
     res.json(countries);
   } catch (error) {
     console.error("Error fetching countries:", error);

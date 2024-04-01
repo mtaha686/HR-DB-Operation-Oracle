@@ -1,7 +1,10 @@
+import UploadForm from "./components/UploadForm";
+import DataTable from "./components/DataTable";
 function App() {
   return (
     <div className="App">
-      <h1>this is my app</h1>
+      <UploadForm />
+      <DataTable />
     </div>
   );
 }

@@ -14,6 +14,7 @@ const getTableNames = async (req, res) => {
       "JOBS",
       "EMPLOYEES",
       "JOB_HISTORY",
+      "students",
     ];
 
     // Filter table names to include only the specified tables

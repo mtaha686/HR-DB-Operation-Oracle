@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
 
-const Job = sequelize.define(
-  "Job",
+const JOBS = sequelize.define(
+  "JOBS",
   {
     JOB_ID: {
       type: DataTypes.STRING(10),
@@ -28,4 +28,4 @@ const Job = sequelize.define(
   }
 );
 
-module.exports = Job;
+module.exports = JOBS;
