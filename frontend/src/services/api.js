@@ -96,6 +96,16 @@ export const getAllRegions = async () => {
   }
 };
 
+export const getAllstudents = async () => {
+  try {
+    const response = await api.get("/students");
+    return response.data;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+};
+
 export const uploadData = async (formData) => {
   try {
     const response = await api.post("/upload", formData, {
