@@ -7,7 +7,7 @@ const COUNTRIES = sequelize.define(
     COUNTRY_ID: {
       type: DataTypes.CHAR(2),
       allowNull: false,
-      // primaryKey: true,
+      primaryKey: true,
     },
     COUNTRY_NAME: {
       type: DataTypes.STRING(40),
@@ -16,10 +16,10 @@ const COUNTRIES = sequelize.define(
     REGION_ID: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      // references: {
-      //   model: "Region", // Assuming you have a model named Region for the regions table
-      //   key: "REGION_ID",
-      // },
+      references: {
+        model: "Region", // Assuming you have a model named Region for the regions table
+        key: "REGION_ID",
+      },
     },
   },
   {
