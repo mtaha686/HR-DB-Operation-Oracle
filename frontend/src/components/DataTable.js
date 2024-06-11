@@ -1,41 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useTableData } from "../hooks/useTableData";
 import { useTableNames } from "../hooks/useTableNames";
-
-// Custom Toast Component
-const Toast = ({ message, show, onClose }) => {
-  if (!show) return null;
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: 20,
-        right: 20,
-        minWidth: "200px",
-        padding: "10px",
-        backgroundColor: "#333",
-        color: "#fff",
-        borderRadius: "5px",
-        zIndex: 1000,
-      }}
-    >
-      {message}
-      <button
-        onClick={onClose}
-        style={{
-          marginLeft: "10px",
-          backgroundColor: "transparent",
-          border: "none",
-          color: "#fff",
-          cursor: "pointer",
-        }}
-      >
-        ✖
-      </button>
-    </div>
-  );
-};
+import {
+  Container,
+  Box,
+  Select,
+  MenuItem,
+  TextField,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  IconButton,
+  Pagination,
+  Snackbar,
+  Alert,
+} from "@mui/material";
+import { Edit, Delete, Add } from "@mui/icons-material";
 
 const DataTable = () => {
   const { selectedTable, tableData, handleTableChange, setTableData } =
@@ -70,8 +55,8 @@ const DataTable = () => {
     setCurrentPage(1);
   }, [tableData, filter]);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
   };
 
   const handleFilterChange = (e) => {
@@ -142,172 +127,176 @@ const DataTable = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="mb-3">
-            <label htmlFor="selectTable" className="form-label">
-              Select Table:
-            </label>
-            <select
-              id="selectTable"
-              className="form-select"
-              value={selectedTable}
-              onChange={handleTableChange}
-            >
-              <option value="">Select a table</option>
-              {tableNames.map((tableName, index) => (
-                <option key={index} value={tableName}>
-                  {tableName}
-                </option>
-              ))}
-            </select>
-          </div>
+    <Container maxWidth="md">
+      <Box mt={5}>
+        <Box mb={3}>
+          <Select
+            fullWidth
+            value={selectedTable}
+            onChange={handleTableChange}
+            displayEmpty
+            inputProps={{ "aria-label": "Select Table" }}
+          >
+            <MenuItem value="">Select a table</MenuItem>
+            {tableNames.map((tableName, index) => (
+              <MenuItem key={index} value={tableName}>
+                {tableName}
+              </MenuItem>
+            ))}
+          </Select>
+        </Box>
 
-          <div className="mb-3">
-            <input
-              type="text"
-              placeholder="Filter"
-              className="form-control"
-              value={filter}
-              onChange={handleFilterChange}
-            />
-          </div>
+        <Box mb={3}>
+          <TextField
+            fullWidth
+            label="Filter"
+            variant="outlined"
+            value={filter}
+            onChange={handleFilterChange}
+          />
+        </Box>
 
-          <button className="btn btn-primary mb-3" onClick={handleAddRow}>
-            Add New Row
-          </button>
+        <Button
+          variant="contained"
+          color="primary"
+          startIcon={<Add />}
+          onClick={handleAddRow}
+        >
+          Add New Row
+        </Button>
 
-          {tableData && tableData.length > 0 ? (
-            <>
-              <table className="table">
-                <thead>
-                  <tr>
+        {tableData && tableData.length > 0 ? (
+          <>
+            <TableContainer component={Paper} sx={{ mt: 3 }}>
+              <Table>
+                <TableHead>
+                  <TableRow>
                     {Object.keys(tableData[0]).map((key, index) => (
-                      <th key={index}>{key}</th>
+                      <TableCell key={index}>{key}</TableCell>
                     ))}
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
+                    <TableCell>Actions</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
                   {currentData.map((row, rowIndex) => (
-                    <tr key={rowIndex}>
+                    <TableRow key={rowIndex}>
                       {Object.entries(row).map(([key, value], colIndex) => (
-                        <td key={colIndex}>
+                        <TableCell key={colIndex}>
                           {editRowIndex === rowIndex ? (
-                            <input
-                              type="text"
+                            <TextField
+                              fullWidth
                               value={editRowData[key]}
                               onChange={(e) => handleChange(e, key)}
                             />
                           ) : (
                             value
                           )}
-                        </td>
+                        </TableCell>
                       ))}
-                      <td>
+                      <TableCell>
                         {editRowIndex === rowIndex ? (
                           <>
-                            <button
-                              className="btn btn-sm btn-success"
+                            <Button
+                              variant="contained"
+                              color="success"
                               onClick={handleSave}
+                              size="small"
                             >
                               Save
-                            </button>
-                            <button
-                              className="btn btn-sm btn-secondary"
+                            </Button>
+                            <Button
+                              variant="contained"
+                              color="secondary"
                               onClick={handleCancel}
+                              size="small"
+                              sx={{ ml: 1 }}
                             >
                               Cancel
-                            </button>
+                            </Button>
                           </>
                         ) : (
                           <>
-                            <button
-                              className="btn btn-sm btn-primary"
+                            <IconButton
+                              color="primary"
                               onClick={() => handleEdit(rowIndex)}
+                              size="small"
                             >
-                              Edit
-                            </button>
-                            <button
-                              className="btn btn-sm btn-danger"
+                              <Edit />
+                            </IconButton>
+                            <IconButton
+                              color="error"
                               onClick={() => handleDelete(rowIndex)}
+                              size="small"
                             >
-                              Delete
-                            </button>
+                              <Delete />
+                            </IconButton>
                           </>
                         )}
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                   ))}
-                </tbody>
-              </table>
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-              <div className="d-flex justify-content-between">
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                >
-                  Previous
-                </button>
-                <span>
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                >
-                  Next
-                </button>
-              </div>
-            </>
-          ) : (
-            <p>No data available for the selected table.</p>
-          )}
+            <Box display="flex" justifyContent="center" mt={3}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handlePageChange}
+                color="primary"
+              />
+            </Box>
+          </>
+        ) : (
+          <p>No data available for the selected table.</p>
+        )}
 
-          {showForm && (
-            <div className="mt-4">
-              <h5>Add New Row</h5>
-              <form>
-                {Object.keys(newRow).map((key, index) => (
-                  <div className="mb-3" key={index}>
-                    <label className="form-label">{key}</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      value={newRow[key]}
-                      onChange={(e) => handleInputChange(e, key)}
-                    />
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  className="btn btn-success"
-                  onClick={handleSubmitNewRow}
-                >
-                  Add Row
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleCancelNewRow}
-                >
-                  Cancel
-                </button>
-              </form>
-            </div>
-          )}
+        {showForm && (
+          <Box mt={4}>
+            <h5>Add New Row</h5>
+            <form>
+              {Object.keys(newRow).map((key, index) => (
+                <Box mb={2} key={index}>
+                  <TextField
+                    fullWidth
+                    label={key}
+                    value={newRow[key]}
+                    onChange={(e) => handleInputChange(e, key)}
+                    variant="outlined"
+                  />
+                </Box>
+              ))}
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleSubmitNewRow}
+              >
+                Add Row
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleCancelNewRow}
+                sx={{ ml: 1 }}
+              >
+                Cancel
+              </Button>
+            </form>
+          </Box>
+        )}
 
-          <Toast
-            message={toastMessage}
-            show={showToast}
-            onClose={() => setShowToast(false)}
-          />
-        </div>
-      </div>
-    </div>
+        <Snackbar
+          open={showToast}
+          autoHideDuration={6000}
+          onClose={() => setShowToast(false)}
+        >
+          <Alert onClose={() => setShowToast(false)} severity="success">
+            {toastMessage}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </Container>
   );
 };
 
